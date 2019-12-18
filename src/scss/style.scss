@@ -1,0 +1,35 @@
+body{
+  font-family: 'Roboto' !important;
+
+}
+label{
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+}
+.login-bg{
+  background: #333;
+  height: 100vh;
+  color:#fff;
+}
+.align-items-center {
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+}
+.justify-content-center {
+  display: flex;
+  justify-content: center;
+}
+.text-right{
+  text-align:right;
+}
+.login-btn {
+  width: 100%;
+  border-radius: 0 !important;
+  padding: 12px !important;
+  box-shadow: none !important;
+  margin-top: 10px !important;
+}
