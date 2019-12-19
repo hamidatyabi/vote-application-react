@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,6 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from "prop-types";
+import DataStore from "../../services/storage/DataStore";
 
 class AppBarLayout extends Component{
 
@@ -63,10 +65,13 @@ class AppBarLayout extends Component{
       this.props.handleCloseMenu();
     })
   };
+  handleSignOut = (e) => {
+    e.preventDefault();
+    this.props.signOut();
+  }
 
   render (){
     const {classes} = (this.props);
-    const {auth} = this.state;
 
     return (
         <AppBar
@@ -88,35 +93,34 @@ class AppBarLayout extends Component{
                 </Typography>
               </Grid>
               <Grid container item xs={6} justify="flex-end" alignItems="center">
-              {auth && (
-                  <div>
-                    <IconButton
-                        aria-label="account of current user"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={this.handleMenu.bind(this)}
-                        color="inherit">
-                      <AccountCircle />
-                    </IconButton>
-                    <Menu
-                        id="menu-appbar"
-                        anchorEl={this.state.anchorEl}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        open={this.state.open}
-                        onClose={this.handleClose.bind(this)}>
-                      <MenuItem onClick={this.handleClose.bind(this)}>Profile</MenuItem>
-                      <MenuItem onClick={this.handleClose.bind(this)}>My account</MenuItem>
-                    </Menu>
-                  </div>
-              )}
+                <div>
+                  <IconButton
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={this.handleMenu.bind(this)}
+                      color="inherit">
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                      id="menu-appbar"
+                      anchorEl={this.state.anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={this.state.open}
+                      onClose={this.handleClose.bind(this)}>
+                    <MenuItem onClick={this.handleClose.bind(this)}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose.bind(this)}>My account</MenuItem>
+                    <MenuItem onClick={this.handleSignOut.bind(this)}>SignOut</MenuItem>
+                  </Menu>
+                </div>
               </Grid>
             </Grid>
           </Toolbar>

@@ -68,7 +68,6 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function DefaultLayout(props) {
   const classes = useStyles();
-  const isAuth = props.isAuth;
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -78,38 +77,35 @@ export default function DefaultLayout(props) {
   };
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
   return (
-      isAuth?(
-          <div className={classes.root}>
-            <CssBaseline />
-            <AppBarLayout auth={isAuth} classes={classes} handleOpenMenu={handleDrawerOpen} handleCloseMenu={handleDrawerClose}/>
-            <main
-                className={clsx(classes.content, {
-                  [classes.contentShift]: !open,
-                })}
-            >
-              <div className={classes.drawerHeader} />
-              <Suspense fallback={loading}>
-                <Switch>
-                  {routes.map((route, idx) => {
-                    return route.component ? (
-                        <Route
-                            key={idx}
-                            path={route.path}
-                            exact={route.exact}
-                            name={route.name}
-                            render={props => (
-                                <route.component
-                                    {...props} />
-                            )} />
-                    ) : (null);
-                  })}
-                  <Redirect from="/" to="/dashboard" />
-                </Switch>
-              </Suspense>
-            </main>
-          </div>):(
-          <Redirect to={{pathname:'/login' ,state:{from: this.props.location} }} />
-      )
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBarLayout classes={classes} signOut={props.signOut} handleOpenMenu={handleDrawerOpen} handleCloseMenu={handleDrawerClose}/>
+        <main
+            className={clsx(classes.content, {
+              [classes.contentShift]: !open,
+            })}
+        >
+          <div className={classes.drawerHeader} />
+          <Suspense fallback={loading}>
+            <Switch>
+              {routes.map((route, idx) => {
+                return route.component ? (
+                    <Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        render={props => (
+                            <route.component
+                                {...props} />
+                        )} />
+                ) : (null);
+              })}
+              <Redirect from="/" to="/dashboard" />
+            </Switch>
+          </Suspense>
+        </main>
+      </div>
   );
 }
 
